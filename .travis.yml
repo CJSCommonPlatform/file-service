@@ -8,11 +8,18 @@ git:
 cache:
   directories:
   - "$HOME/.m2"
+addons:
+  sonarcloud:
+    organization: "cjscommonplatform"
+    branches:
+      - experimental
+    token:
+      secure: "7sS5OX7+3z8J140i+ioySobYRz02IDQ6w6NoPn9RzRg+i4ewPTE4Kd9BD+Lk8hjFDA+5FQeUm/lZl3gsPXktSDvas7XittgrXYaOOeiz30COe58whIqVAefow5zFAHR4R3jortGuOb77Yq9HdDdbVKkBW414cIwGJme751TnA/mq8XxCFAR9jlrGkL86nwggLz1DSqxZUy/p001R9AeSJFNCejxhaTcBvmyoKCjA2IeSE1mJQAUdeFDRuSfUAQIIp3Kpf5uwELSp4SgjXObCj6/+g7Zd9ofQQ5hS5UXlF/NzXM1wiQ2uObzknlOfLZZ9szivHHvm5rYbFH058e0Gwc5oohchWJ0kknOmHJqopjuHnSS2mNUxAGB6gZRZnUkWJ9dySzv1JrN9xln/PlVcqd4dx1L6lRbHp8IMMSohsOykxJM6SZ4ipPFfJIxv5LSwFfD7kkE60nF0GzVZNDFiX7OUkOefRJJ+/fV15UrdUnmYdPeOBPYxsbS+bkdIUNJQM7/BcR+A0NZ1JNADhrbcTvTbe7axoNulcr/csgDcuRMXvau7iGn86Z3ONaasApDVTlrRnXJagBzGWAdAKBifyPWd7W9KbPAmppJ3Ib9ML75jk7M+paGWyXIfgGH0ai4UZaSCFDLkEBMwMku37W1KtmHQUBB9z7EPNKMXo1o7jec="
 before_install:
 - git clone https://github.com/CJSCommonPlatform/travis-settings.git target/travis-settings
 - ln -sfT ${PWD}/target/travis-settings/settings.xml ${HOME}/.m2/settings.xml
 install: "${PWD}/target/travis-settings/java/install.sh -DexcludeGroupIds=uk.gov.justice.services"
-script: "${PWD}/target/travis-settings/java/script.sh coveralls:report"
+script: "${PWD}/target/travis-settings/java/script-install.sh coveralls:report sonar:sonar"
 after_success: "${PWD}/target/travis-settings/java/after_success.sh"
 notifications:
   slack:
